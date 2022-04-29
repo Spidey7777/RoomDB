@@ -2,6 +2,8 @@ package com.example.crudroom.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.crudroom.Database.Word
 import com.example.crudroom.Database.WordDatabase
@@ -11,20 +13,22 @@ import kotlinx.coroutines.launch
 
 class WordViewModel(val database: WordDatabaseDao, application: Application) : AndroidViewModel(application) {
 
-    val wordDao = WordDatabase.getInstance(application).wordDatabaseDao
+
     fun insert(word:Word) {
         viewModelScope.launch(Dispatchers.IO) {
-            wordDao.insert(word)
+            database.insert(word)
         }
     }
+
     fun clear() {
         viewModelScope.launch(Dispatchers.IO) {
-            wordDao.clear()
+            database.clear()
         }
     }
-    fun display() {
-        viewModelScope.launch(Dispatchers.IO) {
-            wordDao.getAllWords()
-        }
-    }
+fun getAllData(): LiveData<List<Word>> {
+  return  database.getAllWords()
+
 }
+
+    }
+

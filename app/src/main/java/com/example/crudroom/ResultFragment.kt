@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.example.crudroom.Database.Word
 import com.example.crudroom.Database.WordDatabase
 import com.example.crudroom.databinding.FragmentResultBinding
 import com.example.crudroom.viewmodel.WordViewModel
 import com.example.crudroom.viewmodel.WordViewModelFactory
+import kotlinx.android.synthetic.main.fragment_result.*
+import java.lang.StringBuilder
+import java.sql.Array
 
 class ResultFragment : Fragment() {
 
@@ -28,15 +33,27 @@ class ResultFragment : Fragment() {
 
         val viewModelFactory = WordViewModelFactory(dataSource, application)
 
-        val wordViewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
+        val wordViewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(WordViewModel::class.java)
 
         binding.wordViewModel = wordViewModel
 
         binding.setLifecycleOwner(this)
 
-        val outputs = wordViewModel.display()
+        wordViewModel.getAllData().observe(viewLifecycleOwner, Observer {
+            val output = StringBuilder()
+            it.forEach { word ->
+                output.append("\n")
+                output.append("->${word.word}")
+                }
+            binding.textView.text = output
 
-        binding.textView.text = outputs.toString()
+
+        })
+
+
+
+
+
 
         binding.backButton.setOnClickListener { view: View ->
             Navigation.findNavController(view).navigate(R.id.action_resultFragment_to_inputFragment)

@@ -11,5 +11,5 @@ data class Word (
     var wordId: Long = 0L,
 
     @ColumnInfo(name = "word_name")
-    var word: String = "Chair"
+    var word: String = ""
 )

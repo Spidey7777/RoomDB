@@ -1,11 +1,15 @@
 package com.example.crudroom
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.crudroom.Database.Word
@@ -25,7 +29,9 @@ class InputFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding: FragmentInputBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_input, container, false)
 
-        wordInput.word = binding.inputText.text.toString()
+
+
+
 
 //        val wordViewmodel = ViewModelProvider(requireActivity()).get(WordViewModel::class.java)
 
@@ -35,16 +41,21 @@ class InputFragment : Fragment() {
 
         val viewModelFactory = WordViewModelFactory(dataSource, application)
 
-        val wordViewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
+        val wordViewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(WordViewModel::class.java)
 
         binding.wordViewModel = wordViewModel
 
         binding.setLifecycleOwner(this)
 
         binding.addButton.setOnClickListener {
-            wordViewModel.insert(wordInput)
+            val word = Word()
+            word.word = binding.inputText.text.toString()
+            wordViewModel.insert(word)
             binding.inputText.text.clear()
+
+
         }
+
 
         binding.clearButton.setOnClickListener {
             wordViewModel.clear()
@@ -52,7 +63,6 @@ class InputFragment : Fragment() {
 
         binding.displayButton.setOnClickListener { view:View ->
             Navigation.findNavController(view).navigate(R.id.action_inputFragment_to_resultFragment)
-//            wordViewmodel.display()
         }
 
         return binding.root
