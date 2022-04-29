@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CRUDRoom</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_title">Room DB</string>
+    <string name="text_hint">Enter any word</string>
+    <string name="button_add">Add</string>
+    <string name="button_display">Display</string>
+    <string name="button_clear">Clear</string>
+    <string name="button_back">Back</string>
+</resources>
