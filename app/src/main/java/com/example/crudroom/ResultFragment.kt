@@ -43,7 +43,7 @@ class ResultFragment : Fragment() {
             val output = StringBuilder()
             it.forEach { word ->
                 output.append("\n")
-                output.append("->${word.word}")
+                output.append(word.word)
                 }
             binding.textView.text = output
 

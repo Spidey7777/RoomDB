@@ -25,10 +25,9 @@ class WordViewModel(val database: WordDatabaseDao, application: Application) : A
             database.clear()
         }
     }
-fun getAllData(): LiveData<List<Word>> {
-  return  database.getAllWords()
+    fun getAllData(): LiveData<List<Word>> {
+        return  database.getAllWords()
+    }
 
 }
-
-    }
 
